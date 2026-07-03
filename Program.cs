@@ -1,1 +1,70 @@
-﻿Console.WriteLine("Hello, World!");
+﻿using System;
+
+namespace StudentManagementSystem
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int option;
+
+            Console.WriteLine("Welcome to the Student Management System");
+            Console.WriteLine("-----------------------------------------");
+
+            Console.WriteLine("Menu");
+
+            Console.WriteLine("1. Add Student");
+            Console.WriteLine("2. View Students");
+            Console.WriteLine("3. Search Students");
+            Console.WriteLine("4. Update Student");
+            Console.WriteLine("5. Delete Student");
+            Console.WriteLine("6. Exit");
+
+            Console.Write("Enter an option from the menu: ");
+
+            while (!int.TryParse(Console.ReadLine(), out option))
+            {
+                Console.WriteLine("Invalid entry. Please try again");
+                Console.Write("Enter an option from the menu: ");
+                
+            }
+            switch (option)
+            {
+                case 1:
+                    Console.WriteLine("You chose to Add students");
+                    Console.WriteLine("---------------------------");
+                    //AddStudents();
+                    break;
+                case 2:
+                    Console.WriteLine("You chose to View Students");
+                    Console.WriteLine("---------------------------");
+                    //ViewStudents();
+                    break;
+                case 3:
+                    Console.WriteLine("You chose to Search Students");
+                    Console.WriteLine("------------------------------");
+                    //SearchStudents();
+                    break;
+                case 4:
+                    Console.WriteLine("You chose to Update a Student");
+                    Console.WriteLine("------------------------------");
+                    //UpdateStudent();
+                    break;
+                case 5:
+                    Console.WriteLine("You chose to Delete a student");
+                    Console.WriteLine("-------------------------------");
+                    //DeleteStudent();
+                    break;
+                case 6:
+                    Console.WriteLine("You chose to exit");
+                    Console.WriteLine("Goodbye");
+                    Environment.Exit(0);
+                    break;
+            }
+            
+
+
+            Console.ReadKey();
+        }
+    }
+}
