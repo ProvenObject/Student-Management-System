@@ -46,9 +46,9 @@ namespace StudentManagementSystem
             ));*/
 
 
-            Student student1 = new Student(123, "Tokelo", "Mashiane", 21, "IT", 70);
 
             int option;
+            int Age;
 
             Console.WriteLine("Welcome to the Student Management System");
             Console.WriteLine("-----------------------------------------");
@@ -73,28 +73,28 @@ namespace StudentManagementSystem
             switch (option)
             {
                 case 1:
-                    Console.WriteLine("You chose to Add students");
-                    Console.WriteLine("---------------------------");
-                    //AddStudents();
+                    Console.WriteLine("You chose to Add a student");
+                    Console.WriteLine("---------------------------\n");
+                    AddStudent(studentList);
                     break;
                 case 2:
                     Console.WriteLine("You chose to View Students");
-                    Console.WriteLine("---------------------------");
+                    Console.WriteLine("---------------------------\n");
                     ViewStudents(studentList);
                     break;
                 case 3:
                     Console.WriteLine("You chose to Search Students");
-                    Console.WriteLine("------------------------------");
+                    Console.WriteLine("------------------------------\n");
                     //SearchStudents();
                     break;
                 case 4:
                     Console.WriteLine("You chose to Update a Student");
-                    Console.WriteLine("------------------------------");
+                    Console.WriteLine("------------------------------\n");
                     //UpdateStudent();
                     break;
                 case 5:
                     Console.WriteLine("You chose to Delete a student");
-                    Console.WriteLine("-------------------------------");
+                    Console.WriteLine("-------------------------------\n");
                     //DeleteStudent();
                     break;
                 case 6:
@@ -107,6 +107,51 @@ namespace StudentManagementSystem
 
 
             Console.ReadKey();
+        }
+
+        static void AddStudent(List<Student> students)
+        {
+            Console.WriteLine("----Add New Student----");
+
+            Console.Write("Enter the student ID of the new Student: ");
+            String StudentId = Console.ReadLine();
+
+            Console.Write("Enter the First Name of the New Student: ");
+            String FirstName = Console.ReadLine();
+
+            Console.Write("Enter the Last Name of the New Student: ");
+            String LastName = Console.ReadLine();
+
+
+            //While loops for exception handling and continuation of code...
+            int Age;
+            Console.Write("Enter the Age Name of the New Student: ");
+            while(int.TryParse(Console.ReadLine(), out Age) == false)
+{
+                Console.ForegroundColor = ConsoleColor.Red; 
+                Console.Write("Invalid input. Please enter a valid number for Age: ");
+                Console.ResetColor();
+            }
+
+
+            Console.Write("Enter the Course of the New Student: ");
+            String Course = Console.ReadLine();
+
+            double Average;
+            Console.Write("Enter the Average of the New Student: ");
+            while (double.TryParse(Console.ReadLine(), out Average) == false)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Invalid input. Please enter a valid number for Average: ");
+                Console.ResetColor();
+            }
+
+            // Student Object via constructor
+            Student newStudent = new Student(StudentId, FirstName, LastName, Age, Course, Average);
+            students.Add(newStudent);
+
+            Console.WriteLine("\nNew Student Successfully Added!");
+
         }
 
         static void ViewStudents(List<Student> students)
