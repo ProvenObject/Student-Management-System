@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StudentManagementSystem
 {
@@ -8,9 +9,9 @@ namespace StudentManagementSystem
         {
             List<Student> studentList = new List<Student>();
 
-            /*studentList.Add(new Student
+            studentList.Add(new Student
             (
-                123,
+                "121113",
                 "john",
                 "Mashiane",
                 32,
@@ -19,7 +20,7 @@ namespace StudentManagementSystem
             ));
             studentList.Add(new Student
             (
-                123,
+                "12123",
                 "john",
                 "Bravo",
                 32,
@@ -28,7 +29,7 @@ namespace StudentManagementSystem
             ));
             studentList.Add(new Student
             (
-                123,
+                "12213",
                 "Daniel",
                 "Mashiane",
                 32,
@@ -37,18 +38,17 @@ namespace StudentManagementSystem
             ));
             studentList.Add(new Student
             (
-                123,
+                "12333",
                 "john",
                 "Mashiane",
                 32,
                 "robotics",
                 99
-            ));*/
+            ));
 
 
 
             int option;
-            int Age;
 
             Console.WriteLine("Welcome to the Student Management System");
             Console.WriteLine("-----------------------------------------");
@@ -85,17 +85,17 @@ namespace StudentManagementSystem
                 case 3:
                     Console.WriteLine("You chose to Search Students");
                     Console.WriteLine("------------------------------\n");
-                    //SearchStudents();
+                    SearchStudents(studentList);
                     break;
                 case 4:
                     Console.WriteLine("You chose to Update a Student");
                     Console.WriteLine("------------------------------\n");
-                    //UpdateStudent();
+                    UpdateStudent(studentList);
                     break;
                 case 5:
                     Console.WriteLine("You chose to Delete a student");
                     Console.WriteLine("-------------------------------\n");
-                    //DeleteStudent();
+                    DeleteStudent(studentList);
                     break;
                 case 6:
                     Console.WriteLine("You chose to exit");
@@ -109,18 +109,19 @@ namespace StudentManagementSystem
             Console.ReadKey();
         }
 
+        //Add a student
         static void AddStudent(List<Student> students)
         {
             Console.WriteLine("----Add New Student----");
 
             Console.Write("Enter the student ID of the new Student: ");
-            String StudentId = Console.ReadLine();
+            string StudentId = Console.ReadLine();
 
             Console.Write("Enter the First Name of the New Student: ");
-            String FirstName = Console.ReadLine();
+            string FirstName = Console.ReadLine();
 
             Console.Write("Enter the Last Name of the New Student: ");
-            String LastName = Console.ReadLine();
+            string LastName = Console.ReadLine();
 
 
             //While loops for exception handling and continuation of code...
@@ -135,7 +136,7 @@ namespace StudentManagementSystem
 
 
             Console.Write("Enter the Course of the New Student: ");
-            String Course = Console.ReadLine();
+            string Course = Console.ReadLine();
 
             double Average;
             Console.Write("Enter the Average of the New Student: ");
@@ -154,6 +155,7 @@ namespace StudentManagementSystem
 
         }
 
+        //View Students
         static void ViewStudents(List<Student> students)
         {
             //Checks if list has students
@@ -191,6 +193,136 @@ namespace StudentManagementSystem
                 row += AvailStudent.Average.ToString().PadRight(6);
 
                 Console.WriteLine(row);
+            }
+        }
+
+        //Search For a Student
+        static void SearchStudents(List<Student> students)
+        {
+            Console.WriteLine("----Search for a Student----");
+
+            Console.Write("Enter the ID of the student: ");
+            string search = Console.ReadLine();
+
+            bool found = false;
+
+            foreach (Student student in students)
+            {
+                if (search == student.StudentId)
+                {
+                    found = true;
+                    Console.WriteLine($"\nID: {student.StudentId} | Name: {student.FirstName} {student.LastName}" +
+                        $" | Age: {student.Age} | Course: {student.Course} | Average: {student.Average}");
+                    break;
+                }
+            }
+            if(found == false)
+            {
+                Console.WriteLine("Student Not Found!");
+            }
+
+        }
+
+        //Update a Student's Details
+        static void UpdateStudent(List<Student> students)
+        {
+            Console.WriteLine("----Update the details of a Student----");
+
+            Console.Write("Enter the ID of the student: ");
+            string search = Console.ReadLine();
+
+            bool found = false;
+
+            foreach (Student student in students)
+            {
+                if (search == student.StudentId)
+                {
+                    found = true;
+                    Console.WriteLine($"\n Current Deatils: \nID: {student.StudentId} | Name: {student.FirstName} {student.LastName} " +
+                        $"| Age: {student.Age} | Course: {student.Course} | Average: {student.Average}");
+
+                    Console.Write("\nEnter new First Name (or press Enter to skip): ");
+                    string inputFirstName = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(inputFirstName)) { student.FirstName = inputFirstName; }
+
+                    Console.Write("\nEnter new Last Name (or press Enter to skip): ");
+                    string inputLastName = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(inputLastName)) { student.LastName = inputLastName; }
+
+
+                    int Age;
+                    Console.Write("\nEnter new Age (or press Enter to skip): ");
+                    string inputAge = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(inputAge))
+                    {
+                        while (int.TryParse(inputAge, out Age) == false)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Invalid input. Please enter a valid number for Age: ");
+                            Console.ResetColor();
+                        }
+                        student.Age = Age;
+                    }
+
+                    Console.Write("\nEnter new Course Name (or press Enter to skip): ");
+                    string inputCourse = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(inputCourse)) { student.Course = inputCourse; }
+
+                    double Average;
+                    Console.Write("\nEnter new Average Mark (or press Enter to skip): ");
+                    string inputAverage = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(inputAverage))
+                    {
+                        while (double.TryParse(inputAverage, out Average) == false)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Invalid input. Please enter a valid number for Average: ");
+                            Console.ResetColor();
+                        }
+                    student.Average = Average;
+                    }
+
+                    Console.WriteLine($"\n New Deatils: \nID: {student.StudentId} | Name: {student.FirstName} {student.LastName} " +
+                        $"| Age: {student.Age} | Course: {student.Course} | Average: {student.Average}");
+
+                    Console.WriteLine("Details Updated Successfully!");
+
+                    break;
+                }
+            }
+            if (found == false)
+            {
+                Console.WriteLine("Student Not Found!");
+            }
+        }
+
+        //Delete a student
+        static void DeleteStudent(List<Student> students)
+        {
+            Console.WriteLine("----Delete a Student----");
+
+            Console.Write("Enter the ID of the student: ");
+            string search = Console.ReadLine();
+
+            Student studentToDelete = null;
+
+            foreach(Student student in students)
+            {
+                if(search == student.StudentId)
+                {
+                    studentToDelete = student;
+                    break;
+                }
+            }
+
+            if(studentToDelete != null)
+            {
+                students.Remove(studentToDelete);
+                Console.WriteLine("Student record successfully deleted.");
+            }
+            else
+            {
+                Console.WriteLine("Student not found. No deletions made.");
             }
         }
     }
