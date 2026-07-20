@@ -46,76 +46,89 @@ namespace StudentManagementSystem
                 99
             ));
 
-
-
-            int option;
-
-            Console.WriteLine("Welcome to the Student Management System");
-            Console.WriteLine("-----------------------------------------");
-
-            Console.WriteLine("Menu");
-
-            Console.WriteLine("1. Add Student");
-            Console.WriteLine("2. View Students");
-            Console.WriteLine("3. Search Students");
-            Console.WriteLine("4. Update Student");
-            Console.WriteLine("5. Delete Student");
-            Console.WriteLine("6. Exit");
-
-            Console.Write("Enter an option from the menu: ");
-
-            while (!int.TryParse(Console.ReadLine(), out option))
+            while (true)
             {
-                Console.WriteLine("Invalid entry. Please try again");
+
+                int option;
+
+                Console.WriteLine("\nWelcome to the Student Management System");
+                Console.WriteLine("-----------------------------------------");
+
+                Console.WriteLine("Menu");
+
+                Console.WriteLine("1. Add Student");
+                Console.WriteLine("2. View Students");
+                Console.WriteLine("3. Search Students");
+                Console.WriteLine("4. Update Student");
+                Console.WriteLine("5. Delete Student");
+                Console.WriteLine("6. Exit");
+
                 Console.Write("Enter an option from the menu: ");
-                
-            }
-            switch (option)
-            {
-                case 1:
-                    Console.WriteLine("You chose to Add a student");
-                    Console.WriteLine("---------------------------\n");
-                    AddStudent(studentList);
-                    break;
-                case 2:
-                    Console.WriteLine("You chose to View Students");
-                    Console.WriteLine("---------------------------\n");
-                    ViewStudents(studentList);
-                    break;
-                case 3:
-                    Console.WriteLine("You chose to Search Students");
-                    Console.WriteLine("------------------------------\n");
-                    SearchStudents(studentList);
-                    break;
-                case 4:
-                    Console.WriteLine("You chose to Update a Student");
-                    Console.WriteLine("------------------------------\n");
-                    UpdateStudent(studentList);
-                    break;
-                case 5:
-                    Console.WriteLine("You chose to Delete a student");
-                    Console.WriteLine("-------------------------------\n");
-                    DeleteStudent(studentList);
-                    break;
-                case 6:
-                    Console.WriteLine("You chose to exit");
-                    Console.WriteLine("Goodbye");
-                    Environment.Exit(0);
-                    break;
-            }
-            
+
+                while (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Invalid entry. Please try again");
+                    Console.Write("Enter an option from the menu: ");
+
+                }
+                switch (option)
+                {
+                    case 1:
+                        Console.WriteLine("\nYou chose to Add a student");
+                        Console.WriteLine("---------------------------\n");
+                        AddStudent(studentList);
+                        break;
+                    case 2:
+                        Console.WriteLine("\nYou chose to View Students");
+                        Console.WriteLine("---------------------------\n");
+                        ViewStudents(studentList);
+                        break;
+                    case 3:
+                        Console.WriteLine("\nYou chose to Search Students");
+                        Console.WriteLine("------------------------------\n");
+                        SearchStudents(studentList);
+                        break;
+                    case 4:
+                        Console.WriteLine("\nYou chose to Update a Student");
+                        Console.WriteLine("------------------------------\n");
+                        UpdateStudent(studentList);
+                        break;
+                    case 5:
+                        Console.WriteLine("\nYou chose to Delete a student");
+                        Console.WriteLine("-------------------------------\n");
+                        DeleteStudent(studentList);
+                        break;
+                    case 6:
+                        Console.WriteLine("You chose to exit");
+                        Console.WriteLine("Goodbye");
+                        Environment.Exit(0);
+                        break;
+                }
 
 
-            Console.ReadKey();
+
+                Console.ReadKey();
+            }
         }
-
         //Add a student
         static void AddStudent(List<Student> students)
         {
             Console.WriteLine("----Add New Student----");
 
             Console.Write("Enter the student ID of the new Student: ");
-            string StudentId = Console.ReadLine();
+            string check = Console.ReadLine();
+
+            foreach(Student student in students)
+            {
+                while(check == student.StudentId)
+                {
+                    Console.Write("ID already exits, please choose alternative: ");
+                    check = Console.ReadLine();
+                }
+                
+            }
+            string StudentId = check;
+           
 
             Console.Write("Enter the First Name of the New Student: ");
             string FirstName = Console.ReadLine();
@@ -126,12 +139,10 @@ namespace StudentManagementSystem
 
             //While loops for exception handling and continuation of code...
             int Age;
-            Console.Write("Enter the Age Name of the New Student: ");
+            Console.Write("Enter the Age of the New Student: ");
             while(int.TryParse(Console.ReadLine(), out Age) == false)
-{
-                Console.ForegroundColor = ConsoleColor.Red; 
+            {
                 Console.Write("Invalid input. Please enter a valid number for Age: ");
-                Console.ResetColor();
             }
 
 
@@ -142,9 +153,7 @@ namespace StudentManagementSystem
             Console.Write("Enter the Average of the New Student: ");
             while (double.TryParse(Console.ReadLine(), out Average) == false)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("Invalid input. Please enter a valid number for Average: ");
-                Console.ResetColor();
             }
 
             // Student Object via constructor
@@ -152,6 +161,8 @@ namespace StudentManagementSystem
             students.Add(newStudent);
 
             Console.WriteLine("\nNew Student Successfully Added!");
+
+            Console.WriteLine("\nPress any key to return to menu...");
 
         }
 
@@ -194,6 +205,8 @@ namespace StudentManagementSystem
 
                 Console.WriteLine(row);
             }
+
+            Console.WriteLine("\nPress any key to return to menu...");
         }
 
         //Search For a Student
@@ -220,6 +233,8 @@ namespace StudentManagementSystem
             {
                 Console.WriteLine("Student Not Found!");
             }
+
+            Console.WriteLine("\nPress any key to return to menu...");
 
         }
 
@@ -255,11 +270,10 @@ namespace StudentManagementSystem
                     string inputAge = Console.ReadLine();
                     if (!string.IsNullOrWhiteSpace(inputAge))
                     {
-                        while (int.TryParse(inputAge, out Age) == false)
+                        while (!int.TryParse(inputAge, out Age))
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.Write("Invalid input. Please enter a valid number for Age: ");
-                            Console.ResetColor();
+                            inputAge = Console.ReadLine();
                         }
                         student.Age = Age;
                     }
@@ -273,11 +287,10 @@ namespace StudentManagementSystem
                     string inputAverage = Console.ReadLine();
                     if (!string.IsNullOrWhiteSpace(inputAverage))
                     {
-                        while (double.TryParse(inputAverage, out Average) == false)
+                        while (!double.TryParse(inputAverage, out Average))
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.Write("Invalid input. Please enter a valid number for Average: ");
-                            Console.ResetColor();
+                            inputAverage = Console.ReadLine();
                         }
                     student.Average = Average;
                     }
@@ -294,6 +307,8 @@ namespace StudentManagementSystem
             {
                 Console.WriteLine("Student Not Found!");
             }
+
+            Console.WriteLine("\nPress any key to return to menu...");
         }
 
         //Delete a student
@@ -324,6 +339,8 @@ namespace StudentManagementSystem
             {
                 Console.WriteLine("Student not found. No deletions made.");
             }
+
+            Console.WriteLine("\nPress any key to return to menu...");
         }
     }
 }
