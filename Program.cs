@@ -1,7 +1,4 @@
-﻿using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace StudentManagementSystem
+﻿namespace StudentManagementSystem
 {
     class Program
     {
@@ -110,45 +107,23 @@ namespace StudentManagementSystem
                 Console.ReadKey();
             }
         }
+
+
         //Add a student
         static void AddStudent(List<Student> students)
         {
             Console.WriteLine("----Add New Student----");
 
-            Console.Write("Enter the student ID of the new Student: ");
-            string check = Console.ReadLine();
+            string StudentId = InputHelper.GetUniqueStudentId(students);
 
-            foreach(Student student in students)
-            {
-                while(check == student.StudentId)
-                {
-                    Console.Write("ID already exits, please choose alternative: ");
-                    check = Console.ReadLine();
-                }
-                
-            }
-            string StudentId = check;
-           
+            string FirstName = InputHelper.GetValidString("Enter the First Name of the New Student: ");
 
-            Console.Write("Enter the First Name of the New Student: ");
-            string FirstName = Console.ReadLine();
+            string LastName = InputHelper.GetValidString("Enter the Last Name of the New Student: ");
 
-            Console.Write("Enter the Last Name of the New Student: ");
-            string LastName = Console.ReadLine();
+            int Age = InputHelper.GetValidInt("Enter the Age of the New Student: ");
 
-
-            //While loops for exception handling and continuation of code...
-            int Age;
-            Console.Write("Enter the Age of the New Student: ");
-            while(int.TryParse(Console.ReadLine(), out Age) == false)
-            {
-                Console.Write("Invalid input. Please enter a valid number for Age: ");
-            }
-
-
-            Console.Write("Enter the Course of the New Student: ");
-            string Course = Console.ReadLine();
-
+            string Course = InputHelper.GetValidString("Enter the Course of the New Student: ");
+            
             double Average;
             Console.Write("Enter the Average of the New Student: ");
             while (double.TryParse(Console.ReadLine(), out Average) == false)
@@ -214,9 +189,7 @@ namespace StudentManagementSystem
         {
             Console.WriteLine("----Search for a Student----");
 
-            Console.Write("Enter the ID of the student: ");
-            string search = Console.ReadLine();
-
+            string search = InputHelper.GetExistingStudentId(students);
             bool found = false;
 
             foreach (Student student in students)
@@ -243,59 +216,53 @@ namespace StudentManagementSystem
         {
             Console.WriteLine("----Update the details of a Student----");
 
-            Console.Write("Enter the ID of the student: ");
-            string search = Console.ReadLine();
+            string search = InputHelper.GetExistingStudentId(students);
 
-            bool found = false;
+            bool found = true;
 
             foreach (Student student in students)
             {
                 if (search == student.StudentId)
                 {
                     found = true;
-                    Console.WriteLine($"\n Current Deatils: \nID: {student.StudentId} | Name: {student.FirstName} {student.LastName} " +
+                    Console.WriteLine($"\n Current Details: \nID: {student.StudentId} | Name: {student.FirstName} {student.LastName} " +
                         $"| Age: {student.Age} | Course: {student.Course} | Average: {student.Average}");
 
+                    // First Name
                     Console.Write("\nEnter new First Name (or press Enter to skip): ");
                     string inputFirstName = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(inputFirstName)) { student.FirstName = inputFirstName; }
+                    if (!string.IsNullOrWhiteSpace(inputFirstName))
+                        student.FirstName = inputFirstName;
 
+                    // Last Name
                     Console.Write("\nEnter new Last Name (or press Enter to skip): ");
                     string inputLastName = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(inputLastName)) { student.LastName = inputLastName; }
+                    if (!string.IsNullOrWhiteSpace(inputLastName))
+                        student.LastName = inputLastName;
 
-
-                    int Age;
+                    // Age
                     Console.Write("\nEnter new Age (or press Enter to skip): ");
                     string inputAge = Console.ReadLine();
                     if (!string.IsNullOrWhiteSpace(inputAge))
                     {
-                        while (!int.TryParse(inputAge, out Age))
-                        {
-                            Console.Write("Invalid input. Please enter a valid number for Age: ");
-                            inputAge = Console.ReadLine();
-                        }
-                        student.Age = Age;
+                        student.Age = InputHelper.GetValidInt("\nEnter new Age: ");
                     }
 
+                    // Course
                     Console.Write("\nEnter new Course Name (or press Enter to skip): ");
                     string inputCourse = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(inputCourse)) { student.Course = inputCourse; }
+                    if (!string.IsNullOrWhiteSpace(inputCourse))
+                        student.Course = inputCourse;
 
-                    double Average;
+                    // Average
                     Console.Write("\nEnter new Average Mark (or press Enter to skip): ");
                     string inputAverage = Console.ReadLine();
                     if (!string.IsNullOrWhiteSpace(inputAverage))
                     {
-                        while (!double.TryParse(inputAverage, out Average))
-                        {
-                            Console.Write("Invalid input. Please enter a valid number for Average: ");
-                            inputAverage = Console.ReadLine();
-                        }
-                    student.Average = Average;
+                        student.Average = InputHelper.GetValidDouble("\nEnter new Average: ");
                     }
 
-                    Console.WriteLine($"\n New Deatils: \nID: {student.StudentId} | Name: {student.FirstName} {student.LastName} " +
+                    Console.WriteLine($"\n New Details: \nID: {student.StudentId} | Name: {student.FirstName} {student.LastName} " +
                         $"| Age: {student.Age} | Course: {student.Course} | Average: {student.Average}");
 
                     Console.WriteLine("Details Updated Successfully!");
@@ -303,7 +270,8 @@ namespace StudentManagementSystem
                     break;
                 }
             }
-            if (found == false)
+
+            if (!found)
             {
                 Console.WriteLine("Student Not Found!");
             }
@@ -316,8 +284,7 @@ namespace StudentManagementSystem
         {
             Console.WriteLine("----Delete a Student----");
 
-            Console.Write("Enter the ID of the student: ");
-            string search = Console.ReadLine();
+            string search = InputHelper.GetExistingStudentId(students);
 
             Student studentToDelete = null;
 
