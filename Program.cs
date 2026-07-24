@@ -1,4 +1,6 @@
-﻿namespace StudentManagementSystem
+﻿using System.Text.Json;
+
+namespace StudentManagementSystem
 {
     class Program
     {
@@ -6,14 +8,14 @@
         {
             List<Student> studentList = new List<Student>();
 
-            studentList.Add(new Student
+            /*studentList.Add(new Student
             (
                 "121113",
                 "john",
                 "Mashiane",
                 32,
                 "robotics",
-                99
+                32
             ));
             studentList.Add(new Student
             (
@@ -31,7 +33,7 @@
                 "Mashiane",
                 32,
                 "Cloud computing",
-                99
+                45
             ));
             studentList.Add(new Student
             (
@@ -40,8 +42,8 @@
                 "Mashiane",
                 32,
                 "robotics",
-                99
-            ));
+                68
+            ));*/
 
             while (true)
             {
@@ -58,7 +60,8 @@
                 Console.WriteLine("3. Search Students");
                 Console.WriteLine("4. Update Student");
                 Console.WriteLine("5. Delete Student");
-                Console.WriteLine("6. Exit");
+                Console.WriteLine("6. View Report");
+                Console.WriteLine("7. Exit");
 
                 Console.Write("Enter an option from the menu: ");
 
@@ -96,6 +99,11 @@
                         DeleteStudent(studentList);
                         break;
                     case 6:
+                        Console.WriteLine("\nYou chose to view report");
+                        Console.WriteLine("-------------------------------\n");
+                        ReportService.GenerateFullReport(studentList);
+                        break;
+                    case 7:
                         Console.WriteLine("You chose to exit");
                         Console.WriteLine("Goodbye");
                         Environment.Exit(0);
