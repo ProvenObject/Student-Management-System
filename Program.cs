@@ -6,44 +6,7 @@ namespace StudentManagementSystem
     {
         static void Main(string[] args)
         {
-            List<Student> studentList = new List<Student>();
-
-            /*studentList.Add(new Student
-            (
-                "121113",
-                "john",
-                "Mashiane",
-                32,
-                "robotics",
-                32
-            ));
-            studentList.Add(new Student
-            (
-                "12123",
-                "john",
-                "Bravo",
-                32,
-                "robotics",
-                99
-            ));
-            studentList.Add(new Student
-            (
-                "12213",
-                "Daniel",
-                "Mashiane",
-                32,
-                "Cloud computing",
-                45
-            ));
-            studentList.Add(new Student
-            (
-                "12333",
-                "john",
-                "Mashiane",
-                32,
-                "robotics",
-                68
-            ));*/
+            List<Student> studentList = StudentDataService.LoadStudents();
 
             while (true)
             {
@@ -142,6 +105,7 @@ namespace StudentManagementSystem
             // Student Object via constructor
             Student newStudent = new Student(StudentId, FirstName, LastName, Age, Course, Average);
             students.Add(newStudent);
+            StudentDataService.SaveStudents(students);
 
             Console.WriteLine("\nNew Student Successfully Added!");
 
@@ -272,6 +236,7 @@ namespace StudentManagementSystem
 
                     Console.WriteLine($"\n New Details: \nID: {student.StudentId} | Name: {student.FirstName} {student.LastName} " +
                         $"| Age: {student.Age} | Course: {student.Course} | Average: {student.Average}");
+                    StudentDataService.SaveStudents(students);
 
                     Console.WriteLine("Details Updated Successfully!");
 
@@ -308,6 +273,7 @@ namespace StudentManagementSystem
             if(studentToDelete != null)
             {
                 students.Remove(studentToDelete);
+                StudentDataService.SaveStudents(students);
                 Console.WriteLine("Student record successfully deleted.");
             }
             else
